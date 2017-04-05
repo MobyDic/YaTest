@@ -1,0 +1,102 @@
+.school__item {
+  margin-bottom: 20px;
+  display: flex;
+  flex-direction: column;
+  border: 2px solid @blue;
+  padding: 10px 20px;
+  min-width: 320px;
+  border-radius: 4px;
+  color: @white;
+  @media @tablet-widths {
+    padding: 20px 25px;
+  }
+  @media @desktop-widths {
+    flex-direction: row;
+    color: @blueDark;
+    align-items: flex-start;
+  }
+  @media @tablet-width-only {
+    &.school__item--frontend {
+      background: @peru;
+    }
+    &.school__item--design {
+      background: @sienna;
+    }
+    &.school__item--mobile {
+      background: @wheat;
+    }
+    &.school__item--mobile.school__item--frontend,
+    &.school__item--mobile.school__item--design,
+    &.school__item--frontend.school__item--design,
+    &.school__item--mobile.school__item--design.school__item--frontend {
+      background: @brown;
+    }
+  }
+
+}
+
+.school__header {
+  margin-bottom: 15px;
+  display: flex;
+  @media @desktop-widths {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+}
+
+.school__title {
+  margin: 0;
+  font-size: 14px;
+  text-align: center;
+  line-height: 20px;
+  font-weight: 100;
+  padding: 0 7px;
+  border: 1px solid currentColor;
+  border-radius: 2px;
+  margin-right: 10px;
+  @media @tablet-widths {
+    font-size: 16px;
+    line-height: 24px;
+  }
+  @media @desktop-widths {
+    font-size: 18px;
+    margin-right: 0;
+    margin-bottom: 15px;
+  }
+}
+
+.school__lection {
+  font-weight: bold;
+  margin-bottom: 5px;
+  @media @tablet-widths {
+    font-size: 22px;
+  }
+  @media @desktop-widths {
+    font-size: 24px;
+  }
+}
+
+.school__teacher {
+  text-align: right;
+  font-weight: 100;
+  font-size: 15px;
+  font-style: italic;
+  margin-bottom: 15px;
+  text-decoration: none;
+  color: @white;
+  flex-grow: 0;
+  margin-left: auto;
+  border-bottom: 1px dashed currentColor;
+  @media @tablet-widths {
+    font-size: 16px;
+    padding-bottom: 3px;
+  }
+  @media @desktop-widths {
+    color: @blueDark;
+  }
+}
+
+.school__wrap {
+  font-size: 18px;
+  font-weight: bold;
+}

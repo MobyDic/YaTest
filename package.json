@@ -1,0 +1,27 @@
+{
+  "name": "PINK",
+  "version": "1.0.0",
+  "description": "",
+  "main": "gulpfile.js",
+  "devDependencies": {
+    "browser-sync": "^2.18.6",
+    "gulp": "^3.9.1",
+    "gulp-less": "^3.3.0",
+    "gulp-sourcemaps": "^2.4.0",
+    "normalize.css": "^5.0.0",
+    "normalize.less": "^1.0.0"
+  },
+  "scripts": {
+    "start": "gulp serve"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/alex-koshara/pink.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/alex-koshara/pink/issues"
+  },
+  "homepage": "https://github.com/alex-koshara/pink#readme"
+}
