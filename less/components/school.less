@@ -2,38 +2,38 @@
   margin-bottom: 20px;
   display: flex;
   flex-direction: column;
-  border: 2px solid @blue;
   padding: 10px 20px;
   min-width: 320px;
   border-radius: 4px;
   color: @white;
-  background: @brown;
   @media @tablet-widths {
     padding: 20px 25px;
   }
   @media @desktop-widths {
     flex-direction: row;
     color: @blueDark;
-    align-items: flex-start;
+    align-items: baseline;
+    border-bottom: 1px solid @blue;
+    border-radius: 0px;
+    margin-bottom: 0;
   }
   @media @tablet-width-only {
     &.school__item--frontend {
-      background: @peru;
+      background: @frontend;
     }
     &.school__item--design {
-      background: @sienna;
+      background: @design;
     }
-    &.school__item--mobile {
-      background: @wheat;
+    &.school__item--mobdev {
+      background: @mobdev;
     }
-    &.school__item--mobile.school__item--frontend,
-    &.school__item--mobile.school__item--design,
+    &.school__item--mobdev.school__item--frontend,
+    &.school__item--mobdev.school__item--design,
     &.school__item--frontend.school__item--design,
-    &.school__item--mobile.school__item--design.school__item--frontend {
+    &.school__item--mobdev.school__item--design.school__item--frontend {
       background: @brown;
     }
   }
-
 }
 
 .school__header {
@@ -42,10 +42,13 @@
   @media @desktop-widths {
     align-items: flex-start;
     flex-direction: column;
+    margin-bottom: 0;
+    margin-right: 10px;
+    width: 10%;
   }
 }
 
-.school__title {
+.school__streams {
   margin: 0;
   font-size: 14px;
   text-align: center;
@@ -61,8 +64,16 @@
   }
   @media @desktop-widths {
     font-size: 18px;
-    margin-right: 0;
-    margin-bottom: 15px;
+    margin-bottom: 10px;
+    &.school__streams--frontend {
+      background: @frontend;
+    }
+    &.school__streams--design {
+      background: @design;
+    }
+    &.school__streams--mobdev {
+      background: @mobdev;
+    }
   }
 }
 
@@ -73,7 +84,8 @@
     font-size: 22px;
   }
   @media @desktop-widths {
-    font-size: 24px;
+    padding-right: 25px;
+    width: 55%;
   }
 }
 
@@ -83,21 +95,37 @@
   font-size: 15px;
   font-style: italic;
   margin-bottom: 15px;
-  text-decoration: none;
   color: @white;
   flex-grow: 0;
   margin-left: auto;
-  border-bottom: 1px dashed currentColor;
+  text-decoration-style: dashed;
+  text-decoration-color: currentColor;
+
   @media @tablet-widths {
     font-size: 16px;
     padding-bottom: 3px;
   }
   @media @desktop-widths {
     color: @blueDark;
+    margin-right: 20px;
+    width: 15%;
+    text-align: left;
   }
 }
 
 .school__wrap {
   font-size: 18px;
   font-weight: bold;
+  @media @desktop-widths {
+    font-weight: normal;
+    width: 10%;
+    padding-right: 10px;
+  }
+}
+
+.school__location {
+  @media @desktop-widths {
+    width: 15%;
+    padding-left: 10px;
+  }
 }

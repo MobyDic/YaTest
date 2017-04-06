@@ -3,6 +3,7 @@
 var DATA_URL = './../data.json';
 var schoolContainer = document.querySelector('.school');
 
+// AJAX
 window.load = (function () {
   return function (url, onLoad) {
     var xhr = new XMLHttpRequest();
@@ -18,6 +19,7 @@ window.load = (function () {
     xhr.send();
   };
 })();
+// =========================END AJAX======================================
 
 window.load(DATA_URL, function(data) {
   renderContainer(data.program);
@@ -32,7 +34,6 @@ function renderContainer(array) {
 }
 
 
-
 // RENDER
 window.schoolRender = (function () {
   var schoolTemplate = document.querySelector('#school-template');
@@ -42,7 +43,6 @@ window.schoolRender = (function () {
   return function (data) {
     var newSchoolElement = schoolElement.cloneNode(true);
     var schoolHeader = newSchoolElement.querySelector('.school__header');
-    var schoolTitle = schoolHeader.querySelector('school__title')
     var schoolLection = newSchoolElement.querySelector('.school__lection');
     var schoolTeacher = newSchoolElement.querySelector('.school__teacher');
     var schoolDate = newSchoolElement.querySelector('.school__date');
@@ -52,22 +52,14 @@ window.schoolRender = (function () {
 
     function setSchoolMod(data) {
       for(var i=0; i < data.length; i++) {
-        console.log(data[i])
-        // schoolTitle.innerText = data[i];
-        // schoolHeader.appendChild(schoolTitle);
-        switch (data[i]) {
-          case 'фронтенд':
-            newSchoolElement.classList.add('school__item--frontend');
-            break;
-          case 'мобильные':
-            newSchoolElement.classList.add('school__item--mobile');
-            break;
-          case 'дизайн':
-            newSchoolElement.classList.add('school__item--design');
-            break;
+        var newSchoolTitle = document.createElement('h2');
+
+        newSchoolTitle.classList.add('school__streams', 'school__streams--' + data[i]);
+        newSchoolTitle.innerText = data[i];
+        newSchoolElement.classList.add('school__item--' + data[i]);
+        schoolHeader.appendChild(newSchoolTitle);
         }
       }
-    }
 
     schoolLection.textContent = data.lection;
     schoolTeacher.textContent = data.teacher;
@@ -77,3 +69,4 @@ window.schoolRender = (function () {
     return newSchoolElement;
   };
 })();
+// =============================END RENDER==================================
