@@ -1,6 +1,6 @@
 'use strict';
 
-var DATA_URL = 'https://github.com/alex-koshara/YaTest/blob/gh-pages/js/data.json';
+var DATA_URL = 'https://alex-koshara.github.io/YaTest/js/data.json';
 var schoolContainer = document.querySelector('.school');
 
 // AJAX
