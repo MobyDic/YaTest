@@ -1,6 +1,6 @@
 'use strict';
 
-var DATA_URL = './../data.json';
+var DATA_URL = '/data.json';
 var schoolContainer = document.querySelector('.school');
 
 // AJAX
