@@ -70,3 +70,20 @@ window.schoolRender = (function () {
   };
 })();
 // =============================END RENDER==================================
+
+
+// FILTER
+(function() {
+var filter = document.querySelector('.filtres__control');
+
+filter.addEventListener('click', onFiltersClick);
+
+function onFiltersClick(e) {
+  renderSchoolByFilter(e.target.id)
+}
+
+function renderSchoolByFilter(filterId) {
+
+}
+
+})();
