@@ -23,6 +23,8 @@ window.load = (function () {
 
 window.load(DATA_URL, function(data) {
   renderContainer(data.program);
+
+  window.filtersControl(data.program);
 });
 
 function renderContainer(array) {
@@ -48,7 +50,7 @@ window.schoolRender = (function () {
     var schoolDate = newSchoolElement.querySelector('.school__date');
     var schoolLocation = newSchoolElement.querySelector('.school__location');
 
-    setSchoolMod(data.title)
+    setSchoolMod(data.streams)
 
     function setSchoolMod(data) {
       for(var i=0; i < data.length; i++) {
@@ -73,17 +75,55 @@ window.schoolRender = (function () {
 
 
 // FILTER
-(function() {
-var filter = document.querySelector('.filtres__control');
+window.filtersControl = (function() {
+  var filterControlStreams = document.querySelector('#filter-control-streams');
+  var currentFilters = [];
+  var filterList = {
+    frontend: 'frontend',
+    mobdev: 'mobdev',
+    design: 'design'
+  }
 
-filter.addEventListener('click', onFiltersClick);
+  return function(data) {
+    var filters = data;
+    filterControlStreams.addEventListener('change', onFiltersClick);
 
-function onFiltersClick(e) {
-  renderSchoolByFilter(e.target.id)
-}
+    function onFiltersClick(e) {
+      console.log(e.target.value)
+      renderSchoolByFilter(e.target.value)
+    }
 
-function renderSchoolByFilter(filterId) {
+    function renderSchoolByFilter(filterValue) {
+      switch (filterValue) {
+        case 'all':
+          currentFilters = filters;
+          break;
+        case 'frontend':
+          currentFilters = getSchoolLection(filterList.frontend);
+          break;
 
-}
+        case 'mobdev':
+          currentFilters = getSchoolLection(filterList.mobdev);
+          break;
 
+        case 'design':
+          currentFilters = getSchoolLection(filterList.design);
+          break;
+      };
+      renderContainer(currentFilters);
+    }
+
+    function getSchoolLection(streams) {
+      currentFilters = [];
+      filters.forEach(function(item) {
+        for (var i=0; i < item.streams.length; i++) {
+          if (item.streams[i] === streams) {
+            currentFilters.push(item);
+          }
+        }
+      });
+      return currentFilters;
+    }
+  };
 })();
+// =============================END FILTER==================================
