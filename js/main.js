@@ -107,16 +107,11 @@ window.filtersControl = (function() {
   return function(data) {
     var filters = data;
 
-    filterControlStreams.addEventListener('change', function(e) {
-      renderSchoolByFilter('streams', e.target.value);
-    });
-
-    filterControlTeachers.addEventListener('change', function(e) {
-      renderSchoolByFilter('teacher', e.target.value);
-    });
+    filterControlStreams.addEventListener('change', onFiltersClick);
+    filterControlTeachers.addEventListener('change', onFiltersClick);
 
     function onFiltersClick(e) {
-      renderSchoolByFilter(e.target.value)
+      renderSchoolByFilter(e.target.name, e.target.value)
     }
 
     function renderSchoolByFilter(key, value) {
