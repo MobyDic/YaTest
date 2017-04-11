@@ -1,18 +1,18 @@
 'use strict';
 
 (function() {
-  if(localStorage.length) {
+  if(localStorage.length != 0) {
     var data = JSON.parse(localStorage.getItem('program'));
-    doOnLoad(data);
+    onLoadDo(data);
 
   } else {
     window.load(DATA_URL, function(data) {
-      doOnLoad(data);
+      onLoadDo(data);
       localStorage.setItem('program', JSON.stringify(data))
     })
   };
 
-  function doOnLoad(data) {
+  function onLoadDo(data) {
     renderContainer(data.program);
 
     window.filtersControl(data.program);
@@ -22,6 +22,8 @@
 
 (function() {
   var schoolBlock = document.querySelector('.school');
+  var editPopup = document.querySelector('.popup-edit');
+  var inputPopup = editPopup.querySelector('.popup-edit__input');
 
   schoolBlock.addEventListener('click', onLectionClick)
 
@@ -29,7 +31,9 @@
     e.preventDefault();
 
     if(e.target.classList.contains('school__lection')) {
-      console.log(e.target.innerText);
+      var targetText = e.target.innerText
+      editPopup.classList.remove('invisible');
+      inputPopup.value = targetText;
     }
   }
 })();
