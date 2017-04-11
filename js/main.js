@@ -87,7 +87,7 @@ window.filtersControl = (function() {
   var filterControlStreams = document.querySelector('#filter-control-streams');
   var filterControlTeachers = document.querySelector('#filter-control-teachers');
   var filteredLectures = [];
-  var filterList = {
+  var FILTER_LIST = {
     streams: {
       frontend: 'frontend',
       mobdev: 'mobdev',
@@ -116,15 +116,13 @@ window.filtersControl = (function() {
     }
 
     function getFilteredLectures(key, value) {
-      filteredLectures = [];
-      filters.forEach(function(item) {
-        for (var i=0; i < item[key].length; i++) {
-          if (item[key][i] === value) {
-            filteredLectures.push(item);
-          }
+      return filters.filter(function(lecture) {
+        if (Array.isArray(lecture[key])) {
+          return lecture[key].indexOf(value) !== -1;
+        } else {
+          return lecture[key] === value;
         }
-      });
-      return filteredLectures;
+      })
     }
   };
 })();

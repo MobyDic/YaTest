@@ -3,14 +3,14 @@
     {
       "streams": ["frontend"],
       "lection": "Лекция 1. Адаптивная вёрстка",
-      "teacher": ["mVasilev"],
+      "teacher": "mVasilev",
       "date": "2017-08-09T18:30:00",
       "location": "ул. Русская 274"
     },
     {
       "streams": ["mobdev"],
       "lection": "Лекция 2. Работа с сенсорным пользовательским вводом",
-      "teacher": ["dDushkin"],
+      "teacher": "dDushkin",
       "date": "2017-08-09T18:30:00",
       "location": "ул. Крымская 17, д.2",
       "completed": true
@@ -18,21 +18,21 @@
     {
       "streams": ["design"],
       "lection": "Лекция 3. Мультимедиа: возможности браузера",
-      "teacher": ["iKarev"],
+      "teacher": "iKarev",
       "date": "2017-08-09T18:30:00",
       "location": "ул. Русская 274"
     },
     {
       "streams": ["frontend", "design"],
       "lection": "Лекция 4. Инструменты разработки мобильного фронтенда",
-      "teacher": ["mVasilev"],
+      "teacher": "mVasilev",
       "date": "2017-08-09T18:30:00",
       "location": "ул. Русская 274"
     },
     {
       "streams": ["design"],
       "lection": "Лекция 5. Инструменты разработки мобильного фронтенда",
-      "teacher": ["iKarev"],
+      "teacher": "iKarev",
       "date": "2017-08-09T18:30:00",
       "location": "ул. Большая Морская 99",
       "completed": true
@@ -40,28 +40,28 @@
     {
       "streams": ["mobdev"],
       "lection": "Лекция 6. Инструменты разработки мобильного фронтенда",
-      "teacher": ["mVasilev"],
+      "teacher": "mVasilev",
       "date": "2017-08-09T18:30:00",
       "location": "ул. Русская 274"
     },
     {
       "streams": ["frontend", "mobdev", "design"],
       "lection": "Лекция 7. Инструменты разработки мобильного фронтенда",
-      "teacher": ["iKarev"],
+      "teacher": "iKarev",
       "date": "2017-08-09T18:30:00",
       "location": "ул. Русская 274"
     },
     {
       "streams": ["frontend"],
       "lection": "Лекция 8. Инструменты разработки мобильного фронтенда",
-      "teacher": ["dDushkin"],
+      "teacher": "dDushkin",
       "date": "2017-08-09T18:30:00",
       "location": "ул. Русская 274"
     },
     {
       "streams": ["design", "mobdev"],
       "lection": "Лекция 9. Инструменты разработки мобильного фронтенда",
-      "teacher": ["dDushkin"],
+      "teacher": "dDushkin",
       "date": "2017-08-09T18:30:00",
       "location": "ул. Русская 274",
       "completed": true
