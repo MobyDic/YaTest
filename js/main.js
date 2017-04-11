@@ -21,13 +21,7 @@ window.load = (function () {
 })();
 // =========================END AJAX======================================
 
-window.load(DATA_URL, function(data) {
-  renderContainer(data.program);
-
-  window.filtersControl(data.program);
-  window.toggleOverlay();
-  localStorage.setItem('myKey', JSON.stringify(data.program))
-});
+// if(JSON.parse(localStorage.get(program)))
 
 function renderContainer(array) {
   schoolContainer.innerText = '';
@@ -166,11 +160,11 @@ window.filtersControl = (function() {
 //OVERLAY
 window.toggleOverlay = (function() {
   return function() {
-    var teacherOverlayOn = document.querySelector('.school');
-    var teacherOverlayOff = document.querySelector('.overlay__button');
+    var schoolBlock = document.querySelector('.school');
+    var closeOverlayBtn = document.querySelector('.overlay__button');
     var overlay = document.querySelector('.overlay');
-    teacherOverlayOn.addEventListener('click', onOverylayClick);
-    teacherOverlayOff.addEventListener('click', onOverylayClick);
+    schoolBlock.addEventListener('click', onOverylayClick);
+    closeOverlayBtn.addEventListener('click', onOverylayClick);
 
     function onOverylayClick(e) {
       e.preventDefault();
