@@ -31,7 +31,6 @@ function renderContainer(lectures) {
   });
 }
 
-
 // RENDER
 window.schoolRender = (function () {
   var schoolTemplate = document.querySelector('#school-template');
@@ -43,7 +42,6 @@ window.schoolRender = (function () {
     hour: 'numeric',
     minute: 'numeric',
   };
-
 
   return function (data) {
     var newSchoolElement = schoolElement.cloneNode(true);
@@ -74,7 +72,6 @@ window.schoolRender = (function () {
         }
       }
 
-
     schoolLection.textContent = data.lection;
     schoolTeacher.textContent = data.teacher;
     schoolDate.textContent = dateLection.toLocaleString('ru', options);
@@ -84,7 +81,6 @@ window.schoolRender = (function () {
   };
 })();
 // =============================END RENDER==================================
-
 
 // FILTER
 window.filtersControl = (function() {
