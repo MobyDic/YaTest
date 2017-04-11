@@ -14,11 +14,25 @@
       </div>
       <div class="program__bottom">
         <div class="filters">
-          <select name="" id="filter-control-streams">
-            <option value="all" selected>Показать все</option>
+          <select class="filters__item" id="filter-control-streams">
+            <option value="all" selected>Все школы</option>
             <option value="frontend">frontend</option>
             <option value="design">design</option>
             <option value="mobdev">mobdev</option>
+          </select>
+
+          <select class="filters__item" id="filter-control-teachers">
+            <option value="all" selected>Все преподаватели</option>
+            <option value="mVasilev">Максим Васильев</option>
+            <option value="dDushkin">Дмитрий Душкин</option>
+            <option value="iKarev">Иван Карев</option>
+          </select>
+
+          <select class="filters__item" id="filter-control-date">
+            <option value="all" selected>Все даты</option>
+            <option value="jule18">18 июля</option>
+            <option value="jule19">19 июля</option>
+            <option value="jule20">20 июля</option>
           </select>
         </div>
 
@@ -29,6 +43,16 @@
       </div>
     </section>
   </div>
+
+  <section class="overlay  invisible">
+  <button class="btn  overlay__button">Закрыть</button>
+    <div class="teacher">
+      <div class="teacher__wrap">
+        <img src="https://avatars.mds.yandex.net/get-yaevents/95043/0914ac42b6dc11e687ef002590c62a5c/big_c" alt="Изображение учителя" class="teacher__img">
+      </div>
+      <div class="teacher__desc">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ut dolor recusandae, maiores distinctio id cum! Enim sed suscipit ducimus eaque sunt eius officiis omnis? Earum facilis sit aut, ipsum soluta! Lorem ipsum dolor sit amet, consectetur adipisicing elit. Voluptas minus nihil quo, ex veniam et tempore autem vitae officiis ipsam qui ullam. Recusandae quod officia, alias ut optio esse, eveniet.</div>
+    </div>
+  </section>
 
   <template id="school-template" style="display: none">
     <div class="school__item">

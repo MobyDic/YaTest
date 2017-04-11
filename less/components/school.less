@@ -22,6 +22,27 @@
 
     align-items: baseline;
   }
+  &.school__item--completed {
+    opacity: .8;
+    position: relative;
+    &::after {
+      content: 'Лекция завершена';
+      display: block;
+      top: 10px;
+      right: 20px;
+      position: absolute;
+      color: @white;
+      font-weight: bold;
+      font-size: 18px;
+      padding: 5px 15px;
+      border: 1px dashed currentColor;
+    }
+    @media @desktop-widths {
+      &::after {
+        content: '';
+      }
+    }
+  }
   @media @tablet-width-only {
     &.school__item--frontend {
       background: @frontend;
@@ -33,9 +54,14 @@
       background: @mobdev;
     }
     &.school__item--mobdev.school__item--frontend, &.school__item--mobdev.school__item--design, &.school__item--frontend.school__item--design, &.school__item--mobdev.school__item--design.school__item--frontend {
-      background: @brown;
+      background: @greyDark;
     }
   }
+}
+
+.school__item--completed .school__lection,
+.school__item--completed .school__date {
+  text-decoration: line-through;
 }
 
 .school__header {
@@ -61,6 +87,7 @@
   margin: 0;
   margin-right: 10px;
   padding: 0 7px;
+  opacity: .7;
 
   text-align: center;
 
@@ -71,7 +98,10 @@
     line-height: 24px;
   }
   @media @desktop-widths {
+    border: none;
+    color: @white;
     font-size: 18px;
+    opacity: 1;
 
     margin-bottom: 10px;
     &.school__streams--frontend {
@@ -134,6 +164,7 @@
   font-weight: bold;
   @media @desktop-widths {
     font-weight: normal;
+    order: -1;
 
     width: 10%;
     padding-right: 10px;

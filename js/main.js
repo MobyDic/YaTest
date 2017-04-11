@@ -25,13 +25,15 @@ window.load(DATA_URL, function(data) {
   renderContainer(data.program);
 
   window.filtersControl(data.program);
+  window.toggleOverlay();
+  localStorage.setItem('myKey', JSON.stringify(data.program))
 });
 
 function renderContainer(array) {
   schoolContainer.innerText = '';
 
-  array.forEach(function (picture) {
-    schoolContainer.appendChild(window.schoolRender(picture));
+  array.forEach(function (school) {
+    schoolContainer.appendChild(window.schoolRender(school));
   });
 }
 
@@ -40,6 +42,13 @@ function renderContainer(array) {
 window.schoolRender = (function () {
   var schoolTemplate = document.querySelector('#school-template');
   var schoolElement = schoolTemplate.content.querySelector('.school__item');
+  var options = {
+    month: 'long',
+    day: 'numeric',
+    timezone: 'UTC',
+    hour: 'numeric',
+    minute: 'numeric',
+  };
 
 
   return function (data) {
@@ -49,8 +58,16 @@ window.schoolRender = (function () {
     var schoolTeacher = newSchoolElement.querySelector('.school__teacher');
     var schoolDate = newSchoolElement.querySelector('.school__date');
     var schoolLocation = newSchoolElement.querySelector('.school__location');
+    var dateLection = new Date(data.date);
 
     setSchoolMod(data.streams)
+    setClassCompleted(data)
+
+    function setClassCompleted(data) {
+      if(data.completed) {
+        newSchoolElement.classList.add('school__item--completed');
+      }
+    }
 
     function setSchoolMod(data) {
       for(var i=0; i < data.length; i++) {
@@ -63,9 +80,10 @@ window.schoolRender = (function () {
         }
       }
 
+
     schoolLection.textContent = data.lection;
     schoolTeacher.textContent = data.teacher;
-    schoolDate.textContent = data.date;
+    schoolDate.textContent = dateLection.toLocaleString('ru', options);
     schoolLocation.textContent = data.location;
 
     return newSchoolElement;
@@ -77,19 +95,27 @@ window.schoolRender = (function () {
 // FILTER
 window.filtersControl = (function() {
   var filterControlStreams = document.querySelector('#filter-control-streams');
+  var filterControlTeachers = document.querySelector('#filter-control-teachers');
   var currentFilters = [];
   var filterList = {
-    frontend: 'frontend',
-    mobdev: 'mobdev',
-    design: 'design'
+    streams: {
+      frontend: 'frontend',
+      mobdev: 'mobdev',
+      design: 'design'
+    },
+    teachers: {
+      mVasilev: 'Максим Васильев',
+      dDushkin: 'Дмитрий Душкин',
+      iKarev: 'Иван Карев'
+    }
   }
 
   return function(data) {
     var filters = data;
     filterControlStreams.addEventListener('change', onFiltersClick);
+    filterControlTeachers.addEventListener('change', onFiltersClick);
 
     function onFiltersClick(e) {
-      console.log(e.target.value)
       renderSchoolByFilter(e.target.value)
     }
 
@@ -99,25 +125,34 @@ window.filtersControl = (function() {
           currentFilters = filters;
           break;
         case 'frontend':
-          currentFilters = getSchoolLection(filterList.frontend);
+          currentFilters = getSchoolFilter(filterList.streams.frontend, 'streams');
           break;
 
         case 'mobdev':
-          currentFilters = getSchoolLection(filterList.mobdev);
+          currentFilters = getSchoolFilter(filterList.streams.mobdev, 'streams');
           break;
 
         case 'design':
-          currentFilters = getSchoolLection(filterList.design);
+          currentFilters = getSchoolFilter(filterList.streams.design, 'streams');
+          break;
+        case 'mVasilev':
+          currentFilters = getSchoolFilter(filterList.teachers.mVasilev, 'teacher');
+          break;
+        case 'dDushkin':
+          currentFilters = getSchoolFilter(filterList.teachers.dDushkin, 'teacher');
+          break;
+        case 'iKarev':
+          currentFilters = getSchoolFilter(filterList.teachers.iKarev, 'teacher');
           break;
       };
       renderContainer(currentFilters);
     }
 
-    function getSchoolLection(streams) {
+    function getSchoolFilter(value, filterItem) {
       currentFilters = [];
       filters.forEach(function(item) {
-        for (var i=0; i < item.streams.length; i++) {
-          if (item.streams[i] === streams) {
+        for (var i=0; i < item[filterItem].length; i++) {
+          if (item[filterItem][i] === value) {
             currentFilters.push(item);
           }
         }
@@ -127,3 +162,24 @@ window.filtersControl = (function() {
   };
 })();
 // =============================END FILTER==================================
+
+//OVERLAY
+window.toggleOverlay = (function() {
+  return function() {
+    var teacherOverlayOn = document.querySelector('.school');
+    var teacherOverlayOff = document.querySelector('.overlay__button');
+    var overlay = document.querySelector('.overlay');
+    teacherOverlayOn.addEventListener('click', onOverylayClick);
+    teacherOverlayOff.addEventListener('click', onOverylayClick);
+
+    function onOverylayClick(e) {
+      e.preventDefault();
+
+      if(e.target.classList.contains('school__teacher') || e.target.classList.contains('overlay__button')) {
+        overlay.classList.toggle('invisible');
+      }
+    }
+  }
+
+})();
+// =============================END OVERLAY==================================
