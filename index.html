@@ -15,21 +15,21 @@
       <div class="program__bottom">
         <div class="filters">
           <select class="filters__item" name="streams" id="filter-control-streams">
-            <option value="all" selected>Все школы</option>
+            <option value="" selected>Все школы</option>
             <option value="frontend">frontend</option>
             <option value="design">design</option>
             <option value="mobdev">mobdev</option>
           </select>
 
           <select class="filters__item" name="teacher" id="filter-control-teachers">
-            <option value="all" selected>Все преподаватели</option>
+            <option value="" selected>Все преподаватели</option>
             <option value="mVasilev">Максим Васильев</option>
             <option value="dDushkin">Дмитрий Душкин</option>
             <option value="iKarev">Иван Карев</option>
           </select>
 
           <select class="filters__item" id="filter-control-date">
-            <option value="all" selected>Все даты</option>
+            <option value="" selected>Все даты</option>
             <option value="jule18">18 июля</option>
             <option value="jule19">19 июля</option>
             <option value="jule20">20 июля</option>
@@ -62,7 +62,7 @@
   </div>
 
   <template id="school-template" style="display: none">
-    <div class="school__item">
+    <div class="lecture">
       <div class="school__header">
       </div>
       <span class="school__lection"></span>

@@ -1,4 +1,4 @@
-.school__item {
+.lecture {
   display: flex;
   flex-direction: column;
 
@@ -22,7 +22,7 @@
 
     align-items: baseline;
   }
-  &.school__item--completed {
+  &.lecture--completed {
     opacity: .8;
     position: relative;
     &::after {
@@ -44,23 +44,23 @@
     }
   }
   @media @tablet-width-only {
-    &.school__item--frontend {
+    &.lecture--frontend {
       background: @frontend;
     }
-    &.school__item--design {
+    &.lecture--design {
       background: @design;
     }
-    &.school__item--mobdev {
+    &.lecture--mobdev {
       background: @mobdev;
     }
-    &.school__item--mobdev.school__item--frontend, &.school__item--mobdev.school__item--design, &.school__item--frontend.school__item--design, &.school__item--mobdev.school__item--design.school__item--frontend {
+    &.lecture--mobdev.lecture--frontend, &.lecture--mobdev.lecture--design, &.lecture--frontend.lecture--design, &.lecture--mobdev.lecture--design.lecture--frontend {
       background: @greyDark;
     }
   }
 }
 
-.school__item--completed .school__lection,
-.school__item--completed .school__date {
+.lecture--completed .school__lection,
+.lecture--completed .school__date {
   text-decoration: line-through;
 }
 

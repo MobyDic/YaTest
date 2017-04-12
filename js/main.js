@@ -38,7 +38,7 @@ function renderContainer(data) {
 // RENDER
 window.schoolRender = (function () {
   var schoolTemplate = document.querySelector('#school-template');
-  var schoolElement = schoolTemplate.content.querySelector('.school__item');
+  var schoolElement = schoolTemplate.content.querySelector('.lecture');
   var options = {
     month: 'long',
     day: 'numeric',
@@ -61,7 +61,7 @@ window.schoolRender = (function () {
 
     function setClassCompleted(lecture) {
       if(lecture.completed) {
-        newSchoolElement.classList.add('school__item--completed');
+        newSchoolElement.classList.add('lecture--completed');
       }
     }
 
@@ -71,7 +71,7 @@ window.schoolRender = (function () {
 
         newSchoolTitle.classList.add('school__streams', 'school__streams--' + lecture[i]);
         newSchoolTitle.innerText = lecture[i];
-        newSchoolElement.classList.add('school__item--' + lecture[i]);
+        newSchoolElement.classList.add('lecture--' + lecture[i]);
         schoolHeader.appendChild(newSchoolTitle);
         }
       }
@@ -114,7 +114,11 @@ window.filtersControl = (function() {
     }
 
     function renderSchoolByFilter(key, value) {
-      filteredLectures = getFilteredLectures(key, value);
+      if(value) {
+        filteredLectures = getFilteredLectures(key, value);
+      } else {
+        filteredLectures = uploadData;
+      }
       renderContainer(filteredLectures);
     }
 
