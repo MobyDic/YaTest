@@ -1,5 +1,6 @@
 'use strict';
 
+var log = console.log;
 localStorage.clear();
 
 var DATA_URL = './../data.json';
@@ -23,11 +24,14 @@ window.load = (function () {
 })();
 // =========================END AJAX======================================
 
-function renderContainer(lectures) {
+function renderContainer(data) {
   schoolContainer.innerText = '';
-
+  var lectures = data;
+  if(!Array.isArray(data)) {
+    lectures = data.lectures;
+  }
   lectures.forEach(function (lecture) {
-    schoolContainer.appendChild(window.schoolRender(lecture));
+    schoolContainer.appendChild(window.schoolRender(lecture, data));
   });
 }
 
@@ -43,39 +47,39 @@ window.schoolRender = (function () {
     minute: 'numeric',
   };
 
-  return function (data) {
+  return function (lecture, data) {
     var newSchoolElement = schoolElement.cloneNode(true);
     var schoolHeader = newSchoolElement.querySelector('.school__header');
     var schoolLection = newSchoolElement.querySelector('.school__lection');
     var schoolTeacher = newSchoolElement.querySelector('.school__teacher');
     var schoolDate = newSchoolElement.querySelector('.school__date');
     var schoolLocation = newSchoolElement.querySelector('.school__location');
-    var dateLection = new Date(data.date);
+    var dateLection = new Date(lecture.start);
 
-    setSchoolMod(data.streams)
-    setClassCompleted(data)
+    setSchoolMod(lecture.streams)
+    setClassCompleted(lecture)
 
-    function setClassCompleted(data) {
-      if(data.completed) {
+    function setClassCompleted(lecture) {
+      if(lecture.completed) {
         newSchoolElement.classList.add('school__item--completed');
       }
     }
 
-    function setSchoolMod(data) {
-      for(var i=0; i < data.length; i++) {
+    function setSchoolMod(lecture) {
+      for(var i=0; i < lecture.length; i++) {
         var newSchoolTitle = document.createElement('h2');
 
-        newSchoolTitle.classList.add('school__streams', 'school__streams--' + data[i]);
-        newSchoolTitle.innerText = data[i];
-        newSchoolElement.classList.add('school__item--' + data[i]);
+        newSchoolTitle.classList.add('school__streams', 'school__streams--' + lecture[i]);
+        newSchoolTitle.innerText = lecture[i];
+        newSchoolElement.classList.add('school__item--' + lecture[i]);
         schoolHeader.appendChild(newSchoolTitle);
         }
       }
 
-    schoolLection.textContent = data.lection;
-    schoolTeacher.textContent = data.teacher;
+    schoolLection.textContent = lecture.lection;
+    schoolTeacher.textContent = uploadData.teachers[lecture.teacher].name;
     schoolDate.textContent = dateLection.toLocaleString('ru', options);
-    schoolLocation.textContent = data.location;
+    schoolLocation.textContent = uploadData.meetingRooms[lecture.room].title;
 
     return newSchoolElement;
   };
@@ -101,7 +105,6 @@ window.filtersControl = (function() {
   }
 
   return function(data) {
-    var filters = data;
 
     filterControlStreams.addEventListener('change', onFiltersClick);
     filterControlTeachers.addEventListener('change', onFiltersClick);
@@ -116,7 +119,8 @@ window.filtersControl = (function() {
     }
 
     function getFilteredLectures(key, value) {
-      return filters.filter(function(lecture) {
+      // log(data.lectures)
+      return data.lectures.filter(function(lecture) {
         if (Array.isArray(lecture[key])) {
           return lecture[key].indexOf(value) !== -1;
         } else {

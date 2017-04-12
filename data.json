@@ -1,70 +1,129 @@
 {
-  "program": [
+  "schools": {
+    "mobdev": {
+        "title": "Школа мобильной разработки",
+        "studentsCount": 32
+    },
+    "frontend": {
+        "title": "Школа разработки интерфейсов",
+        "studentsCount": 51
+    },
+    "design": {
+        "title": "Школа мобильного дизайна",
+        "studentsCount": 28
+    }
+  },
+
+  "teachers": {
+    "dDushkin": {
+        "name": "Дмитрий Душкин",
+        "info": "Более двух лет работает бла бла"
+    },
+    "iKarev": {
+        "name": "Иван Карев",
+        "info": "Занимается дизайном бла бла бла"
+    },
+    "mVasilev": {
+        "name": "Максим Васильев",
+        "info": "Участвовал в таких проектах как бла бла"
+    }
+  },
+
+  "meetingRooms": {
+    "blackJack": {
+        "title": "Черный Джек",
+        "description": "Поднимитесь на пятый этаж и идите налево по коридору до большого кактуса",
+        "capacity": 40
+    },
+    "batut": {
+        "title": "Батутная",
+        "description": "Поднимитесь на третий этаж и идите направо по коридору до жёлтой двери",
+        "capacity": 54
+    },
+    "lunapark": {
+        "title": "Лунапарк",
+        "description": "Поднимитесь на седьмой этаж и идите прямо по коридору до конца",
+        "capacity": 30
+    },
+    "apalon": {
+      "title": "Апалон",
+      "description": "Поднимитесь на седьмой этаж и идите прямо по коридору до конца",
+      "capacity": 49
+    }
+  },
+
+  "lectures": [
     {
       "streams": ["frontend"],
       "lection": "Лекция 1. Адаптивная вёрстка",
       "teacher": "mVasilev",
-      "date": "2017-08-09T18:30:00",
-      "location": "ул. Русская 274"
+      "start": "2017-08-09T18:30:00",
+      "end": "2017-08-09T21:00:00",
+      "room": "blackJack"
     },
     {
       "streams": ["mobdev"],
       "lection": "Лекция 2. Работа с сенсорным пользовательским вводом",
       "teacher": "dDushkin",
-      "date": "2017-08-09T18:30:00",
-      "location": "ул. Крымская 17, д.2",
-      "completed": true
+      "start": "2017-08-09T18:30:00",
+      "end": "2017-08-09T21:00:00",
+      "room": "batut"
     },
     {
       "streams": ["design"],
       "lection": "Лекция 3. Мультимедиа: возможности браузера",
       "teacher": "iKarev",
-      "date": "2017-08-09T18:30:00",
-      "location": "ул. Русская 274"
+      "start": "2017-08-09T18:30:00",
+      "end": "2017-08-09T21:00:00",
+      "room": "lunapark"
     },
     {
       "streams": ["frontend", "design"],
       "lection": "Лекция 4. Инструменты разработки мобильного фронтенда",
-      "teacher": "mVasilev",
-      "date": "2017-08-09T18:30:00",
-      "location": "ул. Русская 274"
+      "teacher": "iKarev",
+      "start": "2017-08-09T18:30:00",
+      "end": "2017-08-09T21:00:00",
+      "room": "apalon"
     },
     {
       "streams": ["design"],
       "lection": "Лекция 5. Инструменты разработки мобильного фронтенда",
       "teacher": "iKarev",
-      "date": "2017-08-09T18:30:00",
-      "location": "ул. Большая Морская 99",
-      "completed": true
+      "start": "2017-08-09T18:30:00",
+      "end": "2017-08-09T21:00:00",
+      "room": "blackJack"
     },
     {
       "streams": ["mobdev"],
       "lection": "Лекция 6. Инструменты разработки мобильного фронтенда",
       "teacher": "mVasilev",
-      "date": "2017-08-09T18:30:00",
-      "location": "ул. Русская 274"
+      "start": "2017-08-09T18:30:00",
+      "end": "2017-08-09T21:00:00",
+      "room": "batut"
     },
     {
       "streams": ["frontend", "mobdev", "design"],
       "lection": "Лекция 7. Инструменты разработки мобильного фронтенда",
       "teacher": "iKarev",
-      "date": "2017-08-09T18:30:00",
-      "location": "ул. Русская 274"
+      "start": "2017-08-09T18:30:00",
+      "end": "2017-08-09T21:00:00",
+      "room": "apalon"
     },
     {
       "streams": ["frontend"],
       "lection": "Лекция 8. Инструменты разработки мобильного фронтенда",
       "teacher": "dDushkin",
-      "date": "2017-08-09T18:30:00",
-      "location": "ул. Русская 274"
+      "start": "2017-08-09T18:30:00",
+      "end": "2017-08-09T21:00:00",
+      "room": "lunapark"
     },
     {
       "streams": ["design", "mobdev"],
       "lection": "Лекция 9. Инструменты разработки мобильного фронтенда",
       "teacher": "dDushkin",
-      "date": "2017-08-09T18:30:00",
-      "location": "ул. Русская 274",
-      "completed": true
+      "start": "2017-08-09T18:30:00",
+      "end": "2017-08-09T21:00:00",
+      "room": "blackJack"
     }
   ]
 }

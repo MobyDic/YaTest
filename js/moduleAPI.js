@@ -1,21 +1,22 @@
 'use strict';
 
 (function() {
-  if(localStorage.length != 0) {
-    var data = JSON.parse(localStorage.getItem('program'));
-    onLoadDo(data);
+  // if(localStorage.length != 0) {
+  //   var data = JSON.parse(localStorage.getItem('program'));
+  //   onLoadDo(data);
 
-  } else {
+  // } else {
     window.load(DATA_URL, function(data) {
+      window.uploadData = data;
       onLoadDo(data);
-      localStorage.setItem('program', JSON.stringify(data))
+      // localStorage.setItem('program', JSON.stringify(data))
     })
-  };
+  // };
 
   function onLoadDo(data) {
-    renderContainer(data.program);
+    renderContainer(data);
 
-    window.filtersControl(data.program);
+    window.filtersControl(data);
     window.toggleOverlay();
   }
 })();
