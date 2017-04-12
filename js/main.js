@@ -31,14 +31,14 @@ function renderContainer(data) {
     lectures = data.lectures;
   }
   lectures.forEach(function (lecture) {
-    schoolContainer.appendChild(window.schoolRender(lecture, data));
+    schoolContainer.appendChild(window.lectureRender(lecture, data));
   });
 }
 
 // RENDER
-window.schoolRender = (function () {
-  var schoolTemplate = document.querySelector('#school-template');
-  var schoolElement = schoolTemplate.content.querySelector('.lecture');
+window.lectureRender = (function () {
+  var lectureTemplate = document.querySelector('#lecture-template');
+  var lectureElement = lectureTemplate.content.querySelector('.lecture');
   var options = {
     month: 'long',
     day: 'numeric',
@@ -48,40 +48,40 @@ window.schoolRender = (function () {
   };
 
   return function (lecture, data) {
-    var newSchoolElement = schoolElement.cloneNode(true);
-    var schoolHeader = newSchoolElement.querySelector('.school__header');
-    var schoolLection = newSchoolElement.querySelector('.school__lection');
-    var schoolTeacher = newSchoolElement.querySelector('.school__teacher');
-    var schoolDate = newSchoolElement.querySelector('.school__date');
-    var schoolLocation = newSchoolElement.querySelector('.school__location');
+    var newLectureElement = lectureElement.cloneNode(true);
+    var lectureHeader = newLectureElement.querySelector('.lecture__header');
+    var lectureLection = newLectureElement.querySelector('.lecture__lection');
+    var lectureTeacher = newLectureElement.querySelector('.lecture__teacher');
+    var lectureDate = newLectureElement.querySelector('.lecture__date');
+    var lectureLocation = newLectureElement.querySelector('.lecture__location');
     var dateLection = new Date(lecture.start);
 
-    setSchoolMod(lecture.streams)
+    setLectureMod(lecture.streams)
     setClassCompleted(lecture)
 
     function setClassCompleted(lecture) {
       if(lecture.completed) {
-        newSchoolElement.classList.add('lecture--completed');
+        newLectureElement.classList.add('lecture--completed');
       }
     }
 
-    function setSchoolMod(lecture) {
+    function setLectureMod(lecture) {
       for(var i=0; i < lecture.length; i++) {
-        var newSchoolTitle = document.createElement('h2');
+        var newLectureTitle = document.createElement('h2');
 
-        newSchoolTitle.classList.add('school__streams', 'school__streams--' + lecture[i]);
-        newSchoolTitle.innerText = lecture[i];
-        newSchoolElement.classList.add('lecture--' + lecture[i]);
-        schoolHeader.appendChild(newSchoolTitle);
+        newLectureTitle.classList.add('lecture__streams', 'lecture__streams--' + lecture[i]);
+        newLectureTitle.innerText = lecture[i];
+        newLectureElement.classList.add('lecture--' + lecture[i]);
+        lectureHeader.appendChild(newLectureTitle);
         }
       }
 
-    schoolLection.textContent = lecture.lection;
-    schoolTeacher.textContent = uploadData.teachers[lecture.teacher].name;
-    schoolDate.textContent = dateLection.toLocaleString('ru', options);
-    schoolLocation.textContent = uploadData.meetingRooms[lecture.room].title;
+    lectureLection.textContent = lecture.lection;
+    lectureTeacher.textContent = uploadData.teachers[lecture.teacher].name;
+    lectureDate.textContent = dateLection.toLocaleString('ru', options);
+    lectureLocation.textContent = uploadData.meetingRooms[lecture.room].title;
 
-    return newSchoolElement;
+    return newLectureElement;
   };
 })();
 // =============================END RENDER==================================
@@ -110,10 +110,10 @@ window.filtersControl = (function() {
     filterControlTeachers.addEventListener('change', onFiltersClick);
 
     function onFiltersClick(e) {
-      renderSchoolByFilter(e.target.name, e.target.value)
+      renderLectureByFilter(e.target.name, e.target.value)
     }
 
-    function renderSchoolByFilter(key, value) {
+    function renderLectureByFilter(key, value) {
       if(value) {
         filteredLectures = getFilteredLectures(key, value);
       } else {
@@ -139,16 +139,16 @@ window.filtersControl = (function() {
 //OVERLAY
 window.toggleOverlay = (function() {
   return function() {
-    var schoolBlock = document.querySelector('.school');
     var closeOverlayBtn = document.querySelector('.overlay__button');
     var overlay = document.querySelector('.overlay');
-    schoolBlock.addEventListener('click', onOverylayClick);
+
+    schoolContainer.addEventListener('click', onOverylayClick);
     closeOverlayBtn.addEventListener('click', onOverylayClick);
 
     function onOverylayClick(e) {
       e.preventDefault();
 
-      if(e.target.classList.contains('school__teacher') || e.target.classList.contains('overlay__button')) {
+      if(e.target.classList.contains('lecture__teacher') || e.target.classList.contains('overlay__button')) {
         overlay.classList.toggle('invisible');
       }
     }

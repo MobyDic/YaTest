@@ -59,12 +59,12 @@
   }
 }
 
-.lecture--completed .school__lection,
-.lecture--completed .school__date {
+.lecture--completed .lecture__lection,
+.lecture--completed .lecture__date {
   text-decoration: line-through;
 }
 
-.school__header {
+.lecture__header {
   display: flex;
 
   margin-bottom: 15px;
@@ -79,7 +79,7 @@
   }
 }
 
-.school__streams {
+.lecture__streams {
   font-size: 14px;
   font-weight: 100;
   line-height: 20px;
@@ -104,19 +104,19 @@
     opacity: 1;
 
     margin-bottom: 10px;
-    &.school__streams--frontend {
+    &.lecture__streams--frontend {
       background: @frontend;
     }
-    &.school__streams--design {
+    &.lecture__streams--design {
       background: @design;
     }
-    &.school__streams--mobdev {
+    &.lecture__streams--mobdev {
       background: @mobdev;
     }
   }
 }
 
-.school__lection {
+.lecture__lection {
   font-weight: bold;
 
   margin-bottom: 5px;
@@ -129,7 +129,7 @@
   }
 }
 
-.school__teacher {
+.lecture__teacher {
   font-size: 15px;
   font-weight: 100;
   font-style: italic;
@@ -159,7 +159,7 @@
   }
 }
 
-.school__wrap {
+.lecture__wrap {
   font-size: 18px;
   font-weight: bold;
   @media @desktop-widths {
@@ -171,7 +171,7 @@
   }
 }
 
-.school__location {
+.lecture__location {
   @media @desktop-widths {
     width: 15%;
     padding-left: 10px;

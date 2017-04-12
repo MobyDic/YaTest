@@ -31,7 +31,7 @@
   function onLectionClick(e) {
     e.preventDefault();
 
-    if(e.target.classList.contains('school__lection')) {
+    if(e.target.classList.contains('lecture__lection')) {
       var targetText = e.target.innerText
       editPopup.classList.remove('invisible');
       inputPopup.value = targetText;
