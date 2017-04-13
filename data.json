@@ -54,6 +54,7 @@
 
   "lectures": [
     {
+      "id": 0,
       "streams": ["frontend"],
       "lection": "Лекция 1. Адаптивная вёрстка",
       "teacher": "mVasilev",
@@ -62,6 +63,7 @@
       "room": "blackJack"
     },
     {
+      "id": 1,
       "streams": ["mobdev"],
       "lection": "Лекция 2. Работа с сенсорным пользовательским вводом",
       "teacher": "dDushkin",
@@ -70,6 +72,7 @@
       "room": "batut"
     },
     {
+      "id": 2,
       "streams": ["design"],
       "lection": "Лекция 3. Мультимедиа: возможности браузера",
       "teacher": "iKarev",
@@ -78,6 +81,7 @@
       "room": "lunapark"
     },
     {
+      "id": 3,
       "streams": ["frontend", "design"],
       "lection": "Лекция 4. Инструменты разработки мобильного фронтенда",
       "teacher": "iKarev",
@@ -86,6 +90,7 @@
       "room": "apalon"
     },
     {
+      "id": 4,
       "streams": ["design"],
       "lection": "Лекция 5. Инструменты разработки мобильного фронтенда",
       "teacher": "iKarev",
@@ -94,6 +99,7 @@
       "room": "blackJack"
     },
     {
+      "id": 5,
       "streams": ["mobdev"],
       "lection": "Лекция 6. Инструменты разработки мобильного фронтенда",
       "teacher": "mVasilev",
@@ -102,6 +108,7 @@
       "room": "batut"
     },
     {
+      "id": 6,
       "streams": ["frontend", "mobdev", "design"],
       "lection": "Лекция 7. Инструменты разработки мобильного фронтенда",
       "teacher": "iKarev",
@@ -110,6 +117,7 @@
       "room": "apalon"
     },
     {
+      "id": 7,
       "streams": ["frontend"],
       "lection": "Лекция 8. Инструменты разработки мобильного фронтенда",
       "teacher": "dDushkin",
@@ -118,6 +126,7 @@
       "room": "lunapark"
     },
     {
+      "id": 8,
       "streams": ["design", "mobdev"],
       "lection": "Лекция 9. Инструменты разработки мобильного фронтенда",
       "teacher": "dDushkin",

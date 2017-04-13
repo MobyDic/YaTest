@@ -1,41 +1,47 @@
 'use strict';
 
-(function() {
-  // if(localStorage.length != 0) {
-  //   var data = JSON.parse(localStorage.getItem('program'));
-  //   onLoadDo(data);
+// localStorage.clear();
 
-  // } else {
+(function() {
+  var mobilizationData;
+  if(localStorage.length != 0) {
+    mobilizationData = JSON.parse(localStorage.getItem('mobilization'));
+  } else {
     window.load(DATA_URL, function(data) {
-      window.uploadData = data;
-      onLoadDo(data);
-      // localStorage.setItem('program', JSON.stringify(data))
+    mobilizationData = data;
+    setLocalStorage(mobilizationData);
     })
-  // };
-
-  function onLoadDo(data) {
-    renderContainer(data);
-
-    window.filtersControl(data);
-    window.toggleOverlay();
   }
-})();
 
-(function() {
-  var schoolBlock = document.querySelector('.school');
-  var editPopup = document.querySelector('.popup-edit');
-  var inputPopup = editPopup.querySelector('.popup-edit__input');
+  window.mobilization = {
+    filteredData: [],
+    getLectures: getFilteredLectures,
+    addLecture: addNewLecture
+  };
 
-  schoolBlock.addEventListener('click', onLectionClick)
+  function setLocalStorage(obj) {
+    localStorage.setItem('mobilization', JSON.stringify(obj));
+  }
 
-  function onLectionClick(e) {
-    e.preventDefault();
+  function addNewLecture(obj) {
+    mobilizationData.lectures.push(obj);
+    setLocalStorage(mobilizationData);
+  }
 
-    if(e.target.classList.contains('lecture__lection')) {
-      var targetText = e.target.innerText
-      editPopup.classList.remove('invisible');
-      inputPopup.value = targetText;
+  function getFilteredLectures(obj) {
+    if(obj) {
+      for(var key in obj) {
+        return mobilizationData.lectures.filter(function(filterItem) {
+          if(Array.isArray(filterItem[key])) {
+            return filterItem[key].indexOf(obj[key]) !== -1;
+          } else {
+            return filterItem[key] === obj[key];
+          }
+        });
+      }
+    }
+    else {
+      return mobilizationData.lectures;
     }
   }
 })();
-

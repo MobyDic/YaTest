@@ -1,7 +1,17 @@
 'use strict';
+var objData = {
+  getNumber: function() {
+    return 5;
+  },
+  getString: function() {
+    return 'string';
+  },
+  getFull: function() {
+    return this.getString() + this.getNumber();
+  }
+};
 
 var log = console.log;
-localStorage.clear();
 
 var DATA_URL = './../data.json';
 var schoolContainer = document.querySelector('.school');
@@ -23,6 +33,14 @@ window.load = (function () {
   };
 })();
 // =========================END AJAX======================================
+
+window.load(DATA_URL, function(data) {
+  window.uploadData = data;
+
+  renderContainer(data);
+  window.filtersControl(data);
+  window.toggleOverlay();
+})
 
 function renderContainer(data) {
   schoolContainer.innerText = '';
@@ -123,14 +141,13 @@ window.filtersControl = (function() {
     }
 
     function getFilteredLectures(key, value) {
-      // log(data.lectures)
       return data.lectures.filter(function(lecture) {
         if (Array.isArray(lecture[key])) {
           return lecture[key].indexOf(value) !== -1;
         } else {
           return lecture[key] === value;
         }
-      })
+      });
     }
   };
 })();
