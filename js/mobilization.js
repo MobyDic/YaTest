@@ -2,8 +2,9 @@
 
 localStorage.clear();
 
-(function() {
+window.mobilization = (function() {
   var mobilizationData;
+  var KODE_STRING = 'лекция добавлена';
   if(localStorage.length != 0) {
     mobilizationData = JSON.parse(localStorage.getItem('mobilization'));
   } else {
@@ -13,7 +14,13 @@ localStorage.clear();
     })
   }
 
-
+  function testCapacity(lecture, newLecture) {
+    if(mobilizationData.meetingRooms[lecture.room].capacity >= mobilizationData.meetingRooms[newLecture.streams].studentsCount) {
+      return true;
+    } else {
+      return false;
+    }
+  }
 
   function findSchoolLection(start, end, array) {
     var startDate = new Date(start);
@@ -44,24 +51,26 @@ localStorage.clear();
 
   function setLocalStorageMobilization() {
     localStorage.setItem('mobilization', JSON.stringify(mobilizationData));
+    mobilizationData = JSON.parse(localStorage.getItem('mobilization'));
   }
 
   function addLecture(obj) {
-    var flag = true;
-    if(!obj.id) {
-      obj.id = mobilizationData.lectures.length;
-    }
+    var flag = '';
+    var capacity = null;
+
     for(var i=0; i < mobilizationData.lectures.length; i++) {
-      if(flag) {
+      if(flag.length <= KODE_STRING.length) {
         flag = findRepeatLectures(mobilizationData.lectures[i], obj);
+        capacity = testCapacity(mobilizationData.lectures[i], obj)
       }
     }
-    log(flag)
-    if(flag === true) {
+    if(flag === KODE_STRING) {
+      if(!obj.id) {
+        obj.id = mobilizationData.lectures.length;
+      }
       mobilizationData.lectures.push(obj);
       setLocalStorageMobilization();
     } else {
-      log('here')
       return flag;
     }
   }
@@ -98,7 +107,7 @@ localStorage.clear();
     var streamsLectures;
     var roomLectures;
     if(obj) {
-      if(Object.keys(obj).length == 3  && obj.streams) {
+      if(Object.keys(obj).length === 3  && obj.streams) {
         for(var key in obj) {
           streamsLectures = mobilizationData.lectures.filter(function(lectureItem) {
             if(Array.isArray(lectureItem.streams)) {
@@ -109,7 +118,7 @@ localStorage.clear();
           });
         }
         return findSchoolLection(obj.start, obj.end, streamsLectures);
-      } else  if (Object.keys(obj).length == 3  && obj.room){
+      } else  if (Object.keys(obj).length === 3  && obj.room){
         for(var key in obj) {
           roomLectures = mobilizationData.lectures.filter(function(lectureItem) {
             if(Array.isArray(lectureItem.room)) {
@@ -144,14 +153,19 @@ localStorage.clear();
       if(lecture.room === newLecture.room) {
         return 'Ошибка: комната ' +  mobilizationData.meetingRooms[newLecture.room].title +' уже занята в это время!';
       } else {
-        return 'Ошибка: в это время у школы ' +  newLecture.streams[0] +' уже есть лекция!';
+        for(var i = 0; i < lecture.streams.length; i++) {
+          if(lecture.streams[i] === newLecture.streams[0]) {
+            return 'Ошибка: в это время у школы ' +  newLecture.streams[0] +' уже есть лекция!';
+          }
+          return KODE_STRING;
+        }
       }
     } else {
-      return true;
+      return KODE_STRING;
     }
   }
 
-  return window.mobilization = {
+  return {
     getLectures: getLectures, // получить все фильтры или сделать выборку
     addLecture: addLecture, // добавить лекцию
     editLecture: editLecture, // редактировать лекцию
