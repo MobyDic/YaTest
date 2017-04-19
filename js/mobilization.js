@@ -106,15 +106,18 @@ window.mobilization = (function() {
   function getLectures(obj) {
     var streamsLectures;
     var roomLectures;
+    var filterLectures = Object.assign({}, mobilizationData);
     if(obj) {
       var keys = Object.keys(obj);
-      var flag = false;
+      for(var i=0; i < keys.length; i++) {
+        filterLectures.lectures = filterLectures.lectures.filter(function(filterItem) {
+          return isLectureMatch(filterItem, keys[i], obj[keys[i]])
+        });
+      }
+
+      return filterLectures;
 
 
-
-      return mobilizationData.lectures.filter(function(filterItem) {
-        return isLectureMatch(filterItem, keys[0], obj[keys[0]])
-      });
       // if(Object.keys(obj).length === 3  && obj.streams) {
       //   streamsLectures = mobilizationData.lectures.filter(function(lectureItem) {
       //     return isLectureMatch(lectureItem, 'streams', obj.streams)
@@ -159,12 +162,22 @@ window.mobilization = (function() {
     }
   }
 
+  function minutesToMilliseconds(minutes) {
+    return minutes * 60000;
+  }
+
+  function hoursToMilliseconds(hours) {
+    return hours * 60 * 60000;
+  }
+
   function isLectureMatch(lecture, key, value) {
     var lectureDate = new Date(lecture[key]);
     var valueDate = new Date(value);
-    debugger;
-    if(lecture[key] === 'start') {
-      return lectureDate.valueOf() >= valueDate;
+    if(key === 'start') {
+      return lectureDate.valueOf() >= valueDate.valueOf();
+    }
+    if(key === 'end') {
+      return lectureDate.valueOf() <= valueDate.valueOf();
     }
 
     if(Array.isArray(lecture[key])) {
