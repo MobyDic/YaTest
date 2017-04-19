@@ -106,17 +106,16 @@ window.mobilization = (function() {
   function getLectures(obj) {
     var streamsLectures;
     var roomLectures;
-    var filterLectures = Object.assign({}, mobilizationData);
+    var filterLectures = mobilizationData.lectures;
     if(obj) {
       var keys = Object.keys(obj);
       for(var i=0; i < keys.length; i++) {
-        filterLectures.lectures = filterLectures.lectures.filter(function(filterItem) {
+        filterLectures = filterLectures.filter(function(filterItem) {
           return isLectureMatch(filterItem, keys[i], obj[keys[i]])
         });
       }
 
       return filterLectures;
-
 
       // if(Object.keys(obj).length === 3  && obj.streams) {
       //   streamsLectures = mobilizationData.lectures.filter(function(lectureItem) {
