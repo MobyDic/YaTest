@@ -129,8 +129,23 @@ window.mobilization = (function() {
     }
   }
 
+  /**
+   * Проверяет, пересекаются ли две лекции по времени
+   *
+   * @param {Lecture} lecture
+   * @param {Lecture} newLecture
+   *
+   * @returns {Boolean} Вернёт true, если лекции пересекаются, и false если нет
+   */
   function isLecturesSimultaneously(lecture, newLecture) {
-    return lecture.start === newLecture.start || lecture.start > newLecture.end <= lecture.end;
+    if(lecture.start === newLecture.start || lecture.start > newLecture.end <= lecture.end) {
+      return true;
+    }
+    if(lecture.end > newLecture.start && lecture.start < newLecture.end) {
+      return true;
+    } else {
+      return false;
+    }
   }
 
   function findRepeatLectures(lecture, newLecture) {
@@ -182,6 +197,7 @@ window.mobilization = (function() {
     getRoom: getRoom, // получить одну аудиторию
     addRoom: addRoom,
     findRepeatLectures: findRepeatLectures,
-    isLectureMatch: isLectureMatch
+    isLectureMatch: isLectureMatch,
+    isLecturesSimultaneously: isLecturesSimultaneously
   };
 })();

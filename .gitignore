@@ -3,3 +3,4 @@ css/
 img/icons.svg
 js/vendor/
 *.log
+out/
