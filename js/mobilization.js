@@ -14,12 +14,19 @@ window.mobilization = (function() {
     })
   }
 
-  function testCapacity(lecture, newLecture) {
-    if(mobilizationData.meetingRooms[lecture.room].capacity >= mobilizationData.meetingRooms[newLecture.streams].studentsCount) {
+  function testCapacity(lecture) {
+    if(mobilizationData.meetingRooms[lecture.room].capacity >= mobilizationData.schools[lecture.streams].studentsCount) {
       return true;
     } else {
       return false;
     }
+  }
+
+  function getOneDay() {
+    var minutes = 60;
+    var hours = 24;
+    var milliseconds = 60000;
+    return milliseconds * minutes * hours;
   }
 
   function findSchoolLection(start, end, array) {
@@ -28,7 +35,7 @@ window.mobilization = (function() {
     var objStartDate = null;
     var objEndDate = null;
     var flagDate = true;
-    var thisDay = 60000*60*24;
+    var thisDay = getOneDay();
     return array.filter(function(filterItem) {
       objStartDate = new Date(filterItem.start);
       objEndDate = new Date(filterItem.start);
@@ -56,12 +63,14 @@ window.mobilization = (function() {
 
   function addLecture(obj) {
     var flag = '';
-    var capacity = null;
+    var capacity = testCapacity(obj);
+    if(!capacity) {
+      return 'В аудитории недостаточно места для студентов';
+    }
 
     for(var i=0; i < mobilizationData.lectures.length; i++) {
       if(flag.length <= KODE_STRING.length) {
         flag = findRepeatLectures(mobilizationData.lectures[i], obj);
-        capacity = testCapacity(mobilizationData.lectures[i], obj)
       }
     }
     if(flag === KODE_STRING) {
@@ -75,22 +84,20 @@ window.mobilization = (function() {
     }
   }
 
-  function getSchools(school) {
-    if(school) {
-      return mobilizationData.schools[school];
-    }
-    else {
-      return mobilizationData.schools;
-    }
+  function getSchool(school) {
+    return mobilizationData.schools[school];
+  }
+
+  function getSchools() {
+    return mobilizationData.schools;
+  }
+
+  function getRoom(room) {
+    return mobilizationData.meetingRooms[room];
   }
 
   function getRooms(room) {
-    if(room) {
-      return mobilizationData.rooms[room];
-    }
-    else {
-      return mobilizationData.schools;
-    }
+    return mobilizationData.meetingRooms;
   }
 
   function addSchool(schoolName, obj) {
@@ -116,33 +123,18 @@ window.mobilization = (function() {
       }
 
       return filterLectures;
-
-      // if(Object.keys(obj).length === 3  && obj.streams) {
-      //   streamsLectures = mobilizationData.lectures.filter(function(lectureItem) {
-      //     return isLectureMatch(lectureItem, 'streams', obj.streams)
-      //   });
-
-      //   return findSchoolLection(obj.start, obj.end, streamsLectures);
-      // } else  if (Object.keys(obj).length === 3  && obj.room){
-      //   roomLectures = mobilizationData.lectures.filter(function(lectureItem) {
-      //     return isLectureMatch(lectureItem, 'room', obj.room)
-      //   });
-
-      //   return findSchoolLection(obj.start, obj.end, roomLectures);
-      // }
-      // for(var key in obj) {
-      //   return mobilizationData.lectures.filter(function(lectureItem) {
-      //     return isLectureMatch(lectureItem, key, obj[key])
-      //   });
-      // }
     }
     else {
       return mobilizationData.lectures;
     }
   }
 
+  function isLecturesSimultaneously(lecture, newLecture) {
+    return lecture.start === newLecture.start || lecture.start > newLecture.end <= lecture.end;
+  }
+
   function findRepeatLectures(lecture, newLecture) {
-    if(lecture.start === newLecture.start || lecture.start > newLecture.end <= lecture.end) {
+    if(isLecturesSimultaneously(lecture, newLecture)) {
       if(lecture.teacher === newLecture.teacher) {
         return 'Ошибка: преподаватель ' +  mobilizationData.teachers[newLecture.teacher].name +' уже занят в это время на другой лекции!';
       } else
@@ -161,24 +153,17 @@ window.mobilization = (function() {
     }
   }
 
-  function minutesToMilliseconds(minutes) {
-    return minutes * 60000;
-  }
-
-  function hoursToMilliseconds(hours) {
-    return hours * 60 * 60000;
-  }
 
   function isLectureMatch(lecture, key, value) {
     var lectureDate = new Date(lecture[key]);
     var valueDate = new Date(value);
+
     if(key === 'start') {
       return lectureDate.valueOf() >= valueDate.valueOf();
     }
     if(key === 'end') {
-      return lectureDate.valueOf() <= valueDate.valueOf();
+      return lectureDate.valueOf() <= valueDate.valueOf() + getOneDay();
     }
-
     if(Array.isArray(lecture[key])) {
       return lecture[key].indexOf(value) !== -1;
     } else {
@@ -190,9 +175,11 @@ window.mobilization = (function() {
     getLectures: getLectures, // получить все фильтры или сделать выборку
     addLecture: addLecture, // добавить лекцию
     editLecture: editLecture, // редактировать лекцию
-    getSchools: getSchools, // получить все школы или выбрать одну
+    getSchools: getSchools, // получить все школы
+    getSchool: getSchool, // получить одну школу
     addSchool: addSchool, // добавить или редактировать школу
-    getRooms: getRooms,
+    getRooms: getRooms, // получить все аудитории
+    getRoom: getRoom, // получить одну аудиторию
     addRoom: addRoom,
     findRepeatLectures: findRepeatLectures,
     isLectureMatch: isLectureMatch
