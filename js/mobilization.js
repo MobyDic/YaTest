@@ -1,5 +1,15 @@
 'use strict';
-
+/**
+ * @typedef {Object} Lecture
+ * Лекция проекта «мобилизация»
+ * @property {Number} id Уникальный идентификатор лекции
+ * @property {Array.<String>} streams Потоки, у которых будет лекция
+ * @property {String} lection Название лекции
+ * @property {String} start Время начала лекции в ISO
+ * @property {String} end Время окончания лекции в ISO
+ * @property {String} teacher Идентификатор лектора
+ * @property {String} room Идентификатор переговорки
+ */
 localStorage.clear();
 
 window.mobilization = (function() {
@@ -14,6 +24,14 @@ window.mobilization = (function() {
     })
   }
 
+  /**
+   * @function testCapacity
+   * Проверяет, вмещаются ли студенты в аудиторию
+   *
+   * @param {Lecture} lecture
+   *
+   * @returns {Boolean} Вернёт true, если вмещаются, и false если нет
+   */
   function testCapacity(lecture) {
     if(mobilizationData.meetingRooms[lecture.room].capacity >= mobilizationData.schools[lecture.streams].studentsCount) {
       return true;
@@ -50,7 +68,15 @@ window.mobilization = (function() {
       }
     });
   }
-
+  /**
+   * @function editLecture
+   * Меняет лекцию на переданный объект
+   *
+   * @param {Lecture} lectureId
+   * @param {Lecture} obj
+   *
+   * @returns {Boolean} Вернёт true, если вмещаются, и false если нет
+   */
   function editLecture(lectureId, obj) {
     mobilizationData.lectures.splice(lectureId, 1, obj);
     setLocalStorageMobilization();
@@ -130,6 +156,7 @@ window.mobilization = (function() {
   }
 
   /**
+   * @function isLecturesSimultaneously
    * Проверяет, пересекаются ли две лекции по времени
    *
    * @param {Lecture} lecture
@@ -167,7 +194,6 @@ window.mobilization = (function() {
       return KODE_STRING;
     }
   }
-
 
   function isLectureMatch(lecture, key, value) {
     var lectureDate = new Date(lecture[key]);
