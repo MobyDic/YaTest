@@ -212,10 +212,10 @@ window.mobilization = (function() {
    * @returns {Boolean} Вернёт true, если лекции пересекаются, и false если нет
    */
   function isLecturesSimultaneously(lecture, newLecture) {
-    if(lecture.start === newLecture.start || lecture.start > newLecture.end <= lecture.end) {
+    if(lecture.start.valueOf() === newLecture.start.valueOf() || lecture.start.valueOf() > newLecture.end.valueOf() <= lecture.end.valueOf()) {
       return true;
     }
-    if(lecture.end > newLecture.start && lecture.start < newLecture.end) {
+    if(lecture.end.valueOf() > newLecture.start.valueOf() && lecture.start.valueOf() < newLecture.end.valueOf()) {
       return true;
     } else {
       return false;
