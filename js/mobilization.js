@@ -89,7 +89,7 @@ window.mobilization = (function() {
 
     for(var i=0; i < mobilizationData.lectures.length; i++) {
       if(flag.length <= KODE_STRING.length) {
-        flag = findRepeatLectures(mobilizationData.lectures[i], lecture);
+        flag = isVerificationEmployment(mobilizationData.lectures[i], lecture);
       }
     }
     if(flag === KODE_STRING) {
@@ -223,7 +223,7 @@ window.mobilization = (function() {
   }
 
   /**
-   * @function findRepeatLectures
+   * @function isVerificationEmployment
    * Проверяет, занят ли преподаватель, аудитория или школа для лекции, которая добавляется
    *
    * @param {Lecture} lecture - Существующая лекция
@@ -231,7 +231,7 @@ window.mobilization = (function() {
    *
    * @returns {String} Вернёт "Лекция добавлена", если лекции не пересекаются, и описание ошибки, если пересекаются
    */
-  function findRepeatLectures(lecture, newLecture) {
+  function isVerificationEmployment(lecture, newLecture) {
     if(isLecturesSimultaneously(lecture, newLecture)) {
       if(lecture.teacher === newLecture.teacher) {
         return 'Ошибка: преподаватель ' +  mobilizationData.teachers[newLecture.teacher].name +' уже занят в это время на другой лекции!';
@@ -288,7 +288,7 @@ window.mobilization = (function() {
     getRooms: getRooms, // получить все аудитории
     getRoom: getRoom, // получить одну аудиторию
     addRoom: addRoom, // добавить аудиторию
-    findRepeatLectures: findRepeatLectures, // найти совпадения
+    isVerificationEmployment: isVerificationEmployment, // найти совпадения
     isLectureMatch: isLectureMatch, // имеется ли значение в лекции
     isLecturesSimultaneously: isLecturesSimultaneously // проверить пересечение лекций
   };
