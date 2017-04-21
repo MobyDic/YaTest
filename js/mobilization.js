@@ -51,7 +51,7 @@ window.mobilization = (function() {
    * @function editLecture
    * Меняет лекцию по Id на переданный объект
    *
-   * @param {Lecture} lectureId - Id лекции, которую надо изменить
+   * @param {Number} lectureId - Id лекции, которую надо изменить
    * @param {Lecture} lecture - Новая лекция
    *
    * @returns {Lecture} Запишет в localStorage объект с изменениями
@@ -65,7 +65,7 @@ window.mobilization = (function() {
    * @function setLocalStorageMobilization
    * Запись в localStorage и в mobilizationData данных
    *
-   * @returns {localStorage} Обвновленный localStorage и mobilizationData
+   * @returns {Lecture} Обвновленный localStorage и mobilizationData
    */
   function setLocalStorageMobilization() {
     localStorage.setItem('mobilization', JSON.stringify(mobilizationData));
@@ -107,9 +107,9 @@ window.mobilization = (function() {
    * @function getStream
    * Получение данных по одному потоку
    *
-   * @param {Streams} streams - Выбранный поток
+   * @param {String} streams - Выбранный поток
    *
-   * @returns {Streams} Вернет данные выбранного потока
+   * @returns {Object} Вернет данные выбранного потока
    */
   function getStream(stream) {
     return mobilizationData.streams[stream];
@@ -119,7 +119,7 @@ window.mobilization = (function() {
    * @function getStreams
    * Получение данных по всем потокам
    *
-   * @returns {Streams} Вернет данные о всех потоках
+   * @returns {Object} Вернет данные о всех потоках
    */
   function getStreams() {
     return mobilizationData.streams;
@@ -129,9 +129,9 @@ window.mobilization = (function() {
    * @function getRoom
    * Получение данных по всем аудиториям
    *
-   * @param {MeetingRooms} room - Выбранная аудитория
+   * @param {String} room - Выбранная аудитория
    *
-   * @returns {MeetingRooms} Вернет данные выбранной аудитории
+   * @returns {Object} Вернет данные выбранной аудитории
    */
   function getRoom(room) {
     return mobilizationData.meetingRooms[room];
@@ -141,9 +141,9 @@ window.mobilization = (function() {
    * @function getRooms
    * Получение данных по всем аудиториям
    *
-   * @returns {MeetingRooms} Вернет данные о всех аудиториях
+   * @returns {Object} Вернет данные о всех аудиториях
    */
-  function getRooms(room) {
+  function getRooms() {
     return mobilizationData.meetingRooms;
   }
 
@@ -151,10 +151,10 @@ window.mobilization = (function() {
    * @function addStream
    * Добавить поток
    *
-   * @param {Streams} streamName - Название потока
-   * @param {Streams} stream - Объект с данными о потоке
+   * @param {String} streamName - Название потока
+   * @param {Object} stream - Объект с данными о потоке
    *
-   * @returns {Streams} Сохранение потока в localStorage и mobilizationData
+   * @returns {Leture} Сохранение потока в localStorage и mobilizationData
    */
   function addStream(streamName, stream) {
     mobilizationData.streams[streamName] = stream;
@@ -165,10 +165,10 @@ window.mobilization = (function() {
    * @function addRoom
    * Добавить поток
    *
-   * @param {MeetingRooms} roomName - Название аудитории
-   * @param {MeetingRooms} room - Объект с данными об аудитории
+   * @param {String} roomName - Название аудитории
+   * @param {Object} room - Объект с данными об аудитории
    *
-   * @returns {MeetingRooms} Сохранение аудитории в localStorage и mobilizationData
+   * @returns {Lecture} Сохранение аудитории в localStorage и mobilizationData
    */
   function addRoom(roomName, room) {
     mobilizationData.meetingRooms[roomName] = room;
@@ -179,19 +179,19 @@ window.mobilization = (function() {
    * @function getLectures
    * Получить лекции
    *
-   * @param {Lectures} lecture - Объект с данными по которым идет отбор
+   * @param {Object} params - Объект с данными по которым идет отбор
    *
-   * @returns {Lectures} Вернутся лекции, удовлетворяющие запрос
+   * @returns {Array.<Lecture>} Вернутся лекции, удовлетворяющие запрос
    */
-  function getLectures(lecture) {
+  function getLectures(params) {
     var streamsLectures;
     var roomLectures;
     var filterLectures = mobilizationData.lectures;
-    if(lecture) {
-      var keys = Object.keys(lecture);
+    if(params) {
+      var keys = Object.keys(params);
       for(var i=0; i < keys.length; i++) {
         filterLectures = filterLectures.filter(function(filterItem) {
-          return isLectureMatch(filterItem, keys[i], lecture[keys[i]])
+          return isLectureMatch(filterItem, keys[i], params[keys[i]])
         });
       }
 
@@ -229,7 +229,7 @@ window.mobilization = (function() {
    * @param {Lecture} lecture - Существующая лекция
    * @param {Lecture} newLecture - Лекция, которая добавляется
    *
-   * @returns {Boolean} Вернёт "Лекция добавлена", если лекции не пересекаются, и описание ошибки, если пересекаются
+   * @returns {String} Вернёт "Лекция добавлена", если лекции не пересекаются, и описание ошибки, если пересекаются
    */
   function findRepeatLectures(lecture, newLecture) {
     if(isLecturesSimultaneously(lecture, newLecture)) {
@@ -251,6 +251,16 @@ window.mobilization = (function() {
     }
   }
 
+  /**
+   * @function isLectureMatch
+   * Проверяет, имеются ли входящие данные в Lecture
+   *
+   * @param {Lecture} lecture - Объект с данными о лекции
+   * @param {String} key - Ключ лекции
+   * @param {String} value - Значение
+   *
+   * @returns {Boolean} Вернет true, если в lecture по key соответсвует value, иначе - false
+   */
   function isLectureMatch(lecture, key, value) {
     var lectureDate = new Date(lecture[key]);
     var valueDate = new Date(value);
@@ -277,9 +287,9 @@ window.mobilization = (function() {
     addStream: addStream, // добавить или редактировать школу
     getRooms: getRooms, // получить все аудитории
     getRoom: getRoom, // получить одну аудиторию
-    addRoom: addRoom,
-    findRepeatLectures: findRepeatLectures,
-    isLectureMatch: isLectureMatch,
-    isLecturesSimultaneously: isLecturesSimultaneously
+    addRoom: addRoom, // добавить аудиторию
+    findRepeatLectures: findRepeatLectures, // найти совпадения
+    isLectureMatch: isLectureMatch, // имеется ли значение в лекции
+    isLecturesSimultaneously: isLecturesSimultaneously // проверить пересечение лекций
   };
 })();
