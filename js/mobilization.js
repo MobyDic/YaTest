@@ -40,6 +40,12 @@ window.mobilization = (function() {
     }
   }
 
+  /**
+   * @function getOneDay
+   * Проверяет, вмещаются ли студенты в аудиторию
+   *
+   * @returns {Number} Вернет количество миллисекунд в сутках
+   */
   function getOneDay() {
     var minutes = 60;
     var hours = 24;
@@ -52,7 +58,7 @@ window.mobilization = (function() {
    * Меняет лекцию по Id на переданный объект
    *
    * @param {Number} lectureId - Id лекции, которую надо изменить
-   * @param {Lecture} lecture - Новая лекция
+   * @param {Object} lecture - Новая лекция
    *
    * @returns {Lecture} Запишет в localStorage объект с изменениями
    */
@@ -76,7 +82,7 @@ window.mobilization = (function() {
    * @function addLecture
    * Добавление новой лекции
    *
-   * @param {Lecture} lecture - Новая лекция
+   * @param {Object} lecture - Новая лекция
    *
    * @returns {Lecture} При успехе: Обновленный localStorage и mobilizationData. Иначе: сообщение с описанием ошибки
    */
@@ -207,7 +213,7 @@ window.mobilization = (function() {
    * Проверяет, пересекаются ли две лекции по времени
    *
    * @param {Lecture} lecture - Существующая лекция
-   * @param {Lecture} newLecture - Лекция, которая добавляется
+   * @param {Object} newLecture - Лекция, которая добавляется
    *
    * @returns {Boolean} Вернёт true, если лекции пересекаются, и false если нет
    */
@@ -227,7 +233,7 @@ window.mobilization = (function() {
    * Проверяет, занят ли преподаватель, аудитория или школа для лекции, которая добавляется
    *
    * @param {Lecture} lecture - Существующая лекция
-   * @param {Lecture} newLecture - Лекция, которая добавляется
+   * @param {Object} newLecture - Лекция, которая добавляется
    *
    * @returns {String} Вернёт "Лекция добавлена", если лекции не пересекаются, и описание ошибки, если пересекаются
    */
