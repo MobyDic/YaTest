@@ -38,14 +38,14 @@
 `mobilization.getStreams()`<br>
 Получить все потоки
 
-```mobilization.addLecture({
+`mobilization.addLecture({
       "streams": ["frontend"],
       "lection": "Лекция 1. Адаптивная вёрстка",
       "teacher": "iKarev",
       "start": "2017-08-09T20:30:00",
       "end": "2017-08-09T22:00:00",
       "room": "batut"
-    });```
+    });`
     <br>
 Добавить новую лекцию. Если учитель\аудитория\школа в это время заняты, библиотека об этом сообщит.
 
