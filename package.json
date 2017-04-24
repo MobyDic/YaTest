@@ -1,5 +1,5 @@
 {
-  "name": "PINK",
+  "name": "Mobilization",
   "version": "1.0.0",
   "description": "",
   "main": "gulpfile.js",
@@ -8,11 +8,13 @@
     "gulp": "^3.9.1",
     "gulp-less": "^3.3.0",
     "gulp-sourcemaps": "^2.4.0",
+    "jsdoc": "^3.4.3",
     "normalize.css": "^5.0.0",
     "normalize.less": "^1.0.0"
   },
   "scripts": {
-    "start": "gulp serve"
+    "start": "gulp serve",
+    "jsdoc": "jsdoc js/mobilization.js"
   },
   "repository": {
     "type": "git",

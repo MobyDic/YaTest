@@ -1,11 +1,18 @@
 .btn {
+  width: 300px;
+  margin-top: 50px;
+  margin-right: auto;
+  margin-left: auto;
   padding: 10px 20px;
+
+  cursor: pointer;
+  transition: color .3s linear, background .3s linear;
+
+  color: @greyDark;
   border: 1px solid @greyDark;
   border-radius: 4px;
-  color: @greyDark;
-  transition: color .3s linear, background .3s linear;
   &:hover {
-    background: @greyDark;
     color: @white;
+    background: @greyDark;
   }
 }

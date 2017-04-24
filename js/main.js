@@ -1,4 +1,17 @@
 'use strict';
+var objData = {
+  getNumber: function() {
+    return 5;
+  },
+  getString: function() {
+    return 'string';
+  },
+  getFull: function() {
+    return this.getString() + this.getNumber();
+  }
+};
+
+var log = console.log;
 
 var DATA_URL = 'https://alex-koshara.github.io/YaTest/js/data.json';
 var schoolContainer = document.querySelector('.school');
@@ -22,108 +35,141 @@ window.load = (function () {
 // =========================END AJAX======================================
 
 window.load(DATA_URL, function(data) {
-  renderContainer(data.program);
+  window.uploadData = data;
 
-  window.filtersControl(data.program);
-});
+  renderContainer(data);
+  window.filtersControl(data);
+  window.toggleOverlay();
+})
 
-function renderContainer(array) {
+function renderContainer(data) {
   schoolContainer.innerText = '';
-
-  array.forEach(function (picture) {
-    schoolContainer.appendChild(window.schoolRender(picture));
+  var lectures = data;
+  if(!Array.isArray(data)) {
+    lectures = data.lectures;
+  }
+  lectures.forEach(function (lecture) {
+    schoolContainer.appendChild(window.lectureRender(lecture, data));
   });
 }
 
-
 // RENDER
-window.schoolRender = (function () {
-  var schoolTemplate = document.querySelector('#school-template');
-  var schoolElement = schoolTemplate.content.querySelector('.school__item');
+window.lectureRender = (function () {
+  var lectureTemplate = document.querySelector('#lecture-template');
+  var lectureElement = lectureTemplate.content.querySelector('.lecture');
+  var options = {
+    month: 'long',
+    day: 'numeric',
+    timezone: 'UTC',
+    hour: 'numeric',
+    minute: 'numeric',
+  };
 
+  return function (lecture, data) {
+    var newLectureElement = lectureElement.cloneNode(true);
+    var lectureHeader = newLectureElement.querySelector('.lecture__header');
+    var lectureLection = newLectureElement.querySelector('.lecture__lection');
+    var lectureTeacher = newLectureElement.querySelector('.lecture__teacher');
+    var lectureDate = newLectureElement.querySelector('.lecture__date');
+    var lectureLocation = newLectureElement.querySelector('.lecture__location');
+    var dateLection = new Date(lecture.start);
 
-  return function (data) {
-    var newSchoolElement = schoolElement.cloneNode(true);
-    var schoolHeader = newSchoolElement.querySelector('.school__header');
-    var schoolLection = newSchoolElement.querySelector('.school__lection');
-    var schoolTeacher = newSchoolElement.querySelector('.school__teacher');
-    var schoolDate = newSchoolElement.querySelector('.school__date');
-    var schoolLocation = newSchoolElement.querySelector('.school__location');
+    setLectureMod(lecture.streams)
+    setClassCompleted(lecture)
 
-    setSchoolMod(data.streams)
+    function setClassCompleted(lecture) {
+      if(lecture.completed) {
+        newLectureElement.classList.add('lecture--completed');
+      }
+    }
 
-    function setSchoolMod(data) {
-      for(var i=0; i < data.length; i++) {
-        var newSchoolTitle = document.createElement('h2');
+    function setLectureMod(lecture) {
+      for(var i=0; i < lecture.length; i++) {
+        var newLectureTitle = document.createElement('h2');
 
-        newSchoolTitle.classList.add('school__streams', 'school__streams--' + data[i]);
-        newSchoolTitle.innerText = data[i];
-        newSchoolElement.classList.add('school__item--' + data[i]);
-        schoolHeader.appendChild(newSchoolTitle);
+        newLectureTitle.classList.add('lecture__streams', 'lecture__streams--' + lecture[i]);
+        newLectureTitle.innerText = lecture[i];
+        newLectureElement.classList.add('lecture--' + lecture[i]);
+        lectureHeader.appendChild(newLectureTitle);
         }
       }
 
-    schoolLection.textContent = data.lection;
-    schoolTeacher.textContent = data.teacher;
-    schoolDate.textContent = data.date;
-    schoolLocation.textContent = data.location;
+    lectureLection.textContent = lecture.lection;
+    lectureTeacher.textContent = uploadData.teachers[lecture.teacher].name;
+    lectureDate.textContent = dateLection.toLocaleString('ru', options);
+    lectureLocation.textContent = uploadData.meetingRooms[lecture.room].title;
 
-    return newSchoolElement;
+    return newLectureElement;
   };
 })();
 // =============================END RENDER==================================
 
-
 // FILTER
 window.filtersControl = (function() {
   var filterControlStreams = document.querySelector('#filter-control-streams');
-  var currentFilters = [];
-  var filterList = {
-    frontend: 'frontend',
-    mobdev: 'mobdev',
-    design: 'design'
+  var filterControlTeachers = document.querySelector('#filter-control-teachers');
+  var filteredLectures = [];
+  var FILTER_LIST = {
+    streams: {
+      frontend: 'frontend',
+      mobdev: 'mobdev',
+      design: 'design'
+    },
+    teachers: {
+      mVasilev: 'mVasilev',
+      dDushkin: 'dDushkin',
+      iKarev: 'iKarev'
+    }
   }
 
   return function(data) {
-    var filters = data;
+
     filterControlStreams.addEventListener('change', onFiltersClick);
+    filterControlTeachers.addEventListener('change', onFiltersClick);
 
     function onFiltersClick(e) {
-      console.log(e.target.value)
-      renderSchoolByFilter(e.target.value)
+      renderLectureByFilter(e.target.name, e.target.value)
     }
 
-    function renderSchoolByFilter(filterValue) {
-      switch (filterValue) {
-        case 'all':
-          currentFilters = filters;
-          break;
-        case 'frontend':
-          currentFilters = getSchoolLection(filterList.frontend);
-          break;
-
-        case 'mobdev':
-          currentFilters = getSchoolLection(filterList.mobdev);
-          break;
-
-        case 'design':
-          currentFilters = getSchoolLection(filterList.design);
-          break;
-      };
-      renderContainer(currentFilters);
+    function renderLectureByFilter(key, value) {
+      if(value) {
+        filteredLectures = getFilteredLectures(key, value);
+      } else {
+        filteredLectures = uploadData;
+      }
+      renderContainer(filteredLectures);
     }
 
-    function getSchoolLection(streams) {
-      currentFilters = [];
-      filters.forEach(function(item) {
-        for (var i=0; i < item.streams.length; i++) {
-          if (item.streams[i] === streams) {
-            currentFilters.push(item);
-          }
+    function getFilteredLectures(key, value) {
+      return data.lectures.filter(function(lecture) {
+        if (Array.isArray(lecture[key])) {
+          return lecture[key].indexOf(value) !== -1;
+        } else {
+          return lecture[key] === value;
         }
       });
-      return currentFilters;
     }
   };
 })();
 // =============================END FILTER==================================
+
+//OVERLAY
+window.toggleOverlay = (function() {
+  return function() {
+    var closeOverlayBtn = document.querySelector('.overlay__button');
+    var overlay = document.querySelector('.overlay');
+
+    schoolContainer.addEventListener('click', onOverylayClick);
+    closeOverlayBtn.addEventListener('click', onOverylayClick);
+
+    function onOverylayClick(e) {
+      e.preventDefault();
+
+      if(e.target.classList.contains('lecture__teacher') || e.target.classList.contains('overlay__button')) {
+        overlay.classList.toggle('invisible');
+      }
+    }
+  }
+
+})();
+// =============================END OVERLAY==================================

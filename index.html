@@ -4,6 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
   <title>Расписание 2017</title>
+  <link href="https://fonts.googleapis.com/css?family=Roboto+Condensed" rel="stylesheet">
   <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
@@ -14,11 +15,18 @@
       </div>
       <div class="program__bottom">
         <div class="filters">
-          <select name="" id="filter-control-streams">
-            <option value="all" selected>Показать все</option>
+          <select class="filters__item" name="streams" id="filter-control-streams">
+            <option value="" selected>Все школы</option>
             <option value="frontend">frontend</option>
             <option value="design">design</option>
             <option value="mobdev">mobdev</option>
+          </select>
+
+          <select class="filters__item" name="teacher" id="filter-control-teachers">
+            <option value="" selected>Все преподаватели</option>
+            <option value="mVasilev">Максим Васильев</option>
+            <option value="dDushkin">Дмитрий Душкин</option>
+            <option value="iKarev">Иван Карев</option>
           </select>
         </div>
 
@@ -30,18 +38,35 @@
     </section>
   </div>
 
-  <template id="school-template" style="display: none">
-    <div class="school__item">
-      <div class="school__header">
+  <section class="overlay  invisible">
+  <button class="btn  overlay__button">Закрыть</button>
+    <div class="teacher">
+      <div class="teacher__wrap">
+        <img src="https://avatars.mds.yandex.net/get-yaevents/95043/0914ac42b6dc11e687ef002590c62a5c/big_c" alt="Изображение учителя" class="teacher__img">
       </div>
-      <span class="school__lection"></span>
-      <a href="#" class="school__teacher"></a>
-      <div class="school__wrap">
-        <span class="school__date"></span>
+      <div class="teacher__desc">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ut dolor recusandae, maiores distinctio id cum! Enim sed suscipit ducimus eaque sunt eius officiis omnis? Earum facilis sit aut, ipsum soluta! Lorem ipsum dolor sit amet, consectetur adipisicing elit. Voluptas minus nihil quo, ex veniam et tempore autem vitae officiis ipsam qui ullam. Recusandae quod officia, alias ut optio esse, eveniet.</div>
+    </div>
+  </section>
+
+  <template id="lecture-template" style="display: none">
+    <div class="lecture">
+      <div class="lecture__header">
       </div>
-      <span class="school__location"></span>
+      <section class="lecture-main">
+        <h2 class="lecture__lection"></h2>
+        <a href="#" class="lecture__teacher"></a>
+      </section>
+      <div class="lecture__wrap">
+        <span class="lecture__date"></span>
+      </div>
+      <span class="lecture__location"></span>
+      <div class="materials">
+        <a class="materials__link" href="#">Материалы</a>
+        <a class="materials__link" href="#">Видеозапись</a>
+      </div>
     </div>
   </template>
   <script src="js/main.js"></script>
+  <script src="js/mobilization.js"></script>
 </body>
 </html>
