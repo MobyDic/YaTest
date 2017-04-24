@@ -1,34 +1,39 @@
 .teacher {
-  margin: auto;
   display: flex;
-  width: 70%;
   flex-direction: column;
+
+  width: 70%;
+  margin: auto;
   @media @desktop-widths {
     flex-direction: row;
   }
 }
 
 .teacher__wrap {
-  border-radius: 50%;
+  position: relative;
+
   overflow: hidden;
+
   width: 300px;
   height: 300px;
-  position: relative;
   margin-right: 100px;
+
+  border-radius: 50%;
 }
 
 .teacher__img {
   position: absolute;
   top: 0;
-  left: 0;
   right: 0;
   bottom: 0;
+  left: 0;
+
   margin: auto;
 }
 
 .teacher__desc {
   padding-top: 50px;
   @media @desktop-widths {
-    width:  calc(~'100% - 400px');
+    width: calc(~'100% - 400px');
   }
 }

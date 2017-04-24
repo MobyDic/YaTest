@@ -10,7 +10,6 @@
  * @property {String} teacher Идентификатор лектора
  * @property {String} room Идентификатор переговорки
  */
-localStorage.clear();
 
 window.mobilization = (function() {
   var mobilizationData;
@@ -102,6 +101,7 @@ window.mobilization = (function() {
       if(!lecture.id) {
         lecture.id = mobilizationData.lectures.length;
       }
+      log(flag)
       mobilizationData.lectures.push(lecture);
       setLocalStorageMobilization();
     } else {
@@ -155,7 +155,7 @@ window.mobilization = (function() {
 
   /**
    * @function addStream
-   * Добавить поток
+   * Добавляет новый поток. Если поток существует - происходит замена.
    *
    * @param {String} streamName - Название потока
    * @param {Object} stream - Объект с данными о потоке
@@ -169,7 +169,7 @@ window.mobilization = (function() {
 
   /**
    * @function addRoom
-   * Добавить поток
+   * Добавляет новую аудиторию. Если аудитория существует - происходит замена.
    *
    * @param {String} roomName - Название аудитории
    * @param {Object} room - Объект с данными об аудитории

@@ -60,7 +60,8 @@
       "teacher": "mVasilev",
       "start": "2017-08-09T18:30:00",
       "end": "2017-08-09T21:00:00",
-      "room": "blackJack"
+      "room": "blackJack",
+      "completed": true
     },
     {
       "id": 1,
@@ -87,7 +88,8 @@
       "teacher": "iKarev",
       "start": "2017-08-12T18:30:00",
       "end": "2017-08-12T21:00:00",
-      "room": "apalon"
+      "room": "apalon",
+      "completed": true
     },
     {
       "id": 4,
